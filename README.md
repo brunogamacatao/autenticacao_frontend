@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Autenticação - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projeto genérico para autenticação de sistemas web baseado em JWT, feito em React, React Router Dom, Axios e Bootstrap.
 
-## Available Scripts
+Esse projeto também possui suporte a Docker e Docker Compose.
 
-In the project directory, you can run:
+## Configuração do Projeto
 
-### `yarn start`
+A URL do backend pode ser definida na variável de ambiente `REACT_APP_URL_BACKEND` ou especificada no arquivo `.env`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Construindo e Executando o Projeto Localmente
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* Construir: `yarn`
+* Executar: `yarn start`
 
-### `yarn test`
+## Construindo a Imagem Docker
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Durante a construção da imagem Docker é possível especificar a URL do servidor. 
 
-### `yarn build`
+Esse projeto contem um Dockerfile com 2 steps:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* builder: a versão de deployment do projeto é construída.
+* server: utiliza o nginx como servidor web
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Exemplo de comando para construção da imagem:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+docker build . --build-arg APP_BACKEND_URL=http://192.168.1.12:5000 -t brunogamacatao/autenticacao_frontend
+```
 
-### `yarn eject`
+## Executando o Projeto em Container Docker
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+O Nginx escuta requisições na porta 80, portanto, você pode querer fazer um redirecionamento de portas:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+docker run --rm -it -p 3000:80 brunogamacatao/autenticacao_frontend
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Executando a Aplicação Completa
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Esse projeto possui um arquivo `docker-compose.yml` que define o banco de dados, backend e frontend. Para iniciar a aplicação completa basta executar o comando:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+docker-compose up
+```
