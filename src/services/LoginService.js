@@ -4,10 +4,12 @@ import SegurancaService from '../services/SegurancaService';
 const login = async (formLogin) => {
   const {data} = await api.post('/login', formLogin);
 
+  console.log(JSON.stringify(data, null, 2));
+
   if (data.erro) {
     throw data.erro;
   } else {
-    SegurancaService.setToken(data.token);
+    SegurancaService.setToken(data.token, data.role);
   }
 };
 

@@ -6,38 +6,28 @@ const AppContext = React.createContext();
 
 export const AppProvider = ({children}) => {
   const [logado, setLogado] = useState(false);
-  const [overlay, setOverlay] = useState(false);
-  const [textoOverlay, setTextoOverlay] = useState('Aguarde ...');
+  const [role, setRole] = useState(false);
 
   useEffect(() => {
     setLogado(SegurancaService.isAutenticado());
+    setRole(SegurancaService.getRole());
   }, []);
 
   const login = async (formLogin) => {
     await LoginService.login(formLogin);
     setLogado(true);
+    setRole(SegurancaService.getRole());
   };
 
   const logout = () => {
     LoginService.logout();
     setLogado(false);
-  };
-
-  const exibirMensagem = (msg) => {
-    setTextoOverlay(msg);
-    setOverlay(true);
-  };
-
-  const esconderMensagem = () => {
-    setOverlay(false);
+    setRole('');
   };
 
   return (
     <AppContext.Provider value={{
-      logado, setLogado, login, logout, 
-      overlay: {
-        show: overlay, setShow: setOverlay, textoOverlay, setTextoOverlay, exibirMensagem, esconderMensagem
-      }
+      sessao: {logado, role, setLogado, login, logout}, 
     }}>
       {children}
     </AppContext.Provider>

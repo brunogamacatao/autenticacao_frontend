@@ -3,9 +3,15 @@ import { Route, Redirect } from 'react-router-dom';
 
 import SegurancaService from '../../services/SegurancaService';
 
-const RotaPrivada = ({ children, redirectTo, ...rest }) => (
+const RotaPrivada = ({ children, role, redirectTo, ...rest }) => (
   <Route {...rest} render={props => {
-    if (SegurancaService.isAutenticado()) {
+    let podeAcessar = SegurancaService.isAutenticado();
+
+    if (podeAcessar && role) {
+      podeAcessar = SegurancaService.getRole() === role;
+    }
+
+    if (podeAcessar) {
       // se estou autenticado, mostra os componentes filhos
       return children;
     } else {

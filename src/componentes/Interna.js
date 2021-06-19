@@ -4,10 +4,10 @@ import AppContext from '../context/AppContext';
 
 export default function Interna() {
   const history = useHistory();
-  const {logout} = useContext(AppContext);
+  const {sessao} = useContext(AppContext);
 
   const onLogout = () => {
-    logout();
+    sessao.logout();
     history.push('/');
   };
 

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import AppContext from '../context/AppContext';
 
 import SeAutenticado from './seguranca/SeAutenticado';
-
+import SeNaoAutenticado from './seguranca/SeNaoAutenticado';
+import SeUsuarioTemRole from './seguranca/SeUsuarioTemRole';
 
 export default function Cabecalho() {
-  const {logout} = useContext(AppContext);
+  const {sessao} = useContext(AppContext);
 
   return (
     <header>
@@ -21,15 +22,27 @@ export default function Cabecalho() {
               <li className="nav-item">
                 <Link className="nav-link active" to="/">Home</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/interna">Interna</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="/registro">Registrar</Link>
-              </li>
               <SeAutenticado>
                 <li className="nav-item">
-                  <Link className="nav-link active" to="/" onClick={() => logout()}>Sair</Link>
+                  <Link className="nav-link active" to="/interna">Interna</Link>
+                </li>
+              </SeAutenticado>
+              <SeNaoAutenticado>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/login">Login</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/registro">Registrar</Link>
+                </li>
+              </SeNaoAutenticado>
+              <SeUsuarioTemRole role="administrador">
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/usuarios">Usuários</Link>
+                </li>
+              </SeUsuarioTemRole>
+              <SeAutenticado>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/" onClick={() => sessao.logout()}>Sair</Link>
                 </li>
               </SeAutenticado>
             </ul>
