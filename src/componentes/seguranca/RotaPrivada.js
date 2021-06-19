@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import SegurancaService from '../services/SegurancaService';
+import SegurancaService from '../../services/SegurancaService';
 
 const RotaPrivada = ({ children, redirectTo, ...rest }) => (
   <Route {...rest} render={props => {

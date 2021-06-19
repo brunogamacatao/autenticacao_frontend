@@ -5,7 +5,7 @@ const CampoFlutuante = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
-    <div class="form-floating">
+    <div className="form-floating">
       <Field {...field} {...props} className="form-control" placeholder={label}/>
       <label htmlFor={props.id || props.name}>{label}</label>
       {meta.touched && meta.error ? (

@@ -1,4 +1,6 @@
-import React, {useState, useContext} from 'react';
+import '../styles/login.scss';
+
+import React, {useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 
@@ -32,7 +34,7 @@ function Login() {
         >
 
         <Form>
-          <h1 class="h3 mb-3 fw-normal">Identifique-se</h1>
+          <h1 className="h3 mb-3 fw-normal">Identifique-se</h1>
           <CampoFlutuante name="email" label="Email" type="email"/>
           <CampoFlutuante name="senha" label="Senha" type="password"/>
           <BotaoFlutuante label="Entrar"/>
