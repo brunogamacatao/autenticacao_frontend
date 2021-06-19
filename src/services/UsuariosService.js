@@ -10,8 +10,18 @@ const getUsuarios = async () => {
   }
 };
 
+const bloqueia = async (id) => {
+  await api.get(`/usuarios/bloqueia/${id}`);
+};
+
+const desbloqueia = async (id) => {
+  await api.get(`/usuarios/desbloqueia/${id}`);
+};
+
 const UsuariosService = {
-  getUsuarios
+  getUsuarios,
+  bloqueia,
+  desbloqueia
 };
 
 export default UsuariosService;
